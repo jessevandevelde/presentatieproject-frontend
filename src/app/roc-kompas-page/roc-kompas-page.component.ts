@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import type { OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import type { Answer } from '../types/answer.interface';
 import type { AnswerSummary, MatchingResult } from '../types/matching.interface';
 import type { Statement } from '../types/statement.interface';
@@ -23,7 +24,7 @@ const TOPICS: readonly { readonly keywords: readonly string[], readonly label: s
 
 @Component({
   selector: 'rck-roc-kompas-page',
-  imports: [ResultsComponent],
+  imports: [ResultsComponent, RouterLink],
   templateUrl: './roc-kompas-page.component.html',
   styleUrl: './roc-kompas-page.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -85,6 +86,8 @@ export class RocKompasPageComponent implements OnInit {
 
   private readonly answerRevision = signal(0);
 
+  private submissionId = crypto.randomUUID();
+
   public ngOnInit(): void {
     this.loadStatement(0);
   }
@@ -143,6 +146,7 @@ export class RocKompasPageComponent implements OnInit {
     this.matchingResult.set(null);
     this.matchingError.set(null);
     this.feedbackMessage.set(null);
+    this.submissionId = crypto.randomUUID();
     this.loadStatement(0);
   }
 
@@ -201,7 +205,7 @@ export class RocKompasPageComponent implements OnInit {
     this.submittingResults.set(true);
     this.matchingError.set(null);
 
-    this.service.getMatchingResults(answers).subscribe({
+    this.service.getMatchingResults(answers, this.submissionId).subscribe({
       next: (result) => {
         this.submittingResults.set(false);
         this.matchingResult.set(result);

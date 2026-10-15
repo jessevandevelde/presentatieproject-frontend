@@ -1,0 +1,106 @@
+<header class="insights-header">
+  <div class="header-content">
+    <a aria-label="Terug naar de vragenlijst" class="back-link" routerLink="/">←</a>
+    <div class="brand-copy">
+      <strong>ROC Kompas</strong>
+      <span>Live inzichten</span>
+    </div>
+    <span class="privacy-pill"><span aria-hidden="true">●</span> Volledig anoniem</span>
+  </div>
+</header>
+
+<main class="insights-main">
+  <section aria-labelledby="insights-title" class="intro">
+    <div>
+      <span class="eyebrow">Onderwijs- en werkveldkompas</span>
+      <h1 id="insights-title">Zo denkt onze community</h1>
+      <p>Elke stip is één volledig afgeronde vragenlijst. Nieuwe resultaten verschijnen direct, zonder persoonsgegevens of individuele antwoorden.</p>
+    </div>
+    <div aria-live="polite" class="response-count">
+      <strong>{{ total() }}</strong>
+      <span>{{ total() === 1 ? 'inzending' : 'inzendingen' }}</span>
+    </div>
+  </section>
+
+  <section aria-labelledby="plot-title" class="visualization-card">
+    <div class="card-heading">
+      <div>
+        <h2 id="plot-title">Alle anonieme posities</h2>
+        <p>Gebieden met meer overlap krijgen een diepere blauwe gloed.</p>
+      </div>
+      <span class="live-status" [class.offline]="!connected()">
+        <span aria-hidden="true"></span>
+        {{ connected() ? 'Live verbonden' : 'Verbinden…' }}
+      </span>
+    </div>
+
+    @if (!receivedSnapshot()) {
+      <div aria-live="polite" class="plot-state">Live resultaten laden…</div>
+    } @else if (total() === 0) {
+      <div class="plot-state">
+        <strong>Nog geen inzendingen</strong>
+        <span>De eerste afgeronde vragenlijst verschijnt hier automatisch.</span>
+      </div>
+    }
+
+    <div class="plot-frame" [class.empty]="total() === 0">
+      <span class="axis-label axis-top">Vernieuwend</span>
+      <span class="axis-label axis-right">Praktisch</span>
+      <span class="axis-label axis-bottom">Behoudend</span>
+      <span class="axis-label axis-left">Theoretisch</span>
+      <svg aria-label="Anonieme posities op het onderwijs- en werkveldkompas" class="compass" role="img" viewBox="0 0 100 100">
+        <rect class="quadrant quadrant-one" height="40" width="40" x="10" y="10" />
+        <rect class="quadrant quadrant-two" height="40" width="40" x="50" y="10" />
+        <rect class="quadrant quadrant-three" height="40" width="40" x="10" y="50" />
+        <rect class="quadrant quadrant-four" height="40" width="40" x="50" y="50" />
+        @for (cell of heatCells(); track $index) {
+          <rect
+            class="heat-cell"
+            height="8"
+            width="8"
+            [attr.opacity]="cell.opacity"
+            [attr.x]="cell.x"
+            [attr.y]="cell.y"
+          >
+            <title>{{ cell.count }} {{ cell.count === 1 ? 'positie' : 'posities' }} in dit gebied</title>
+          </rect>
+        }
+        <line class="axis" x1="10" x2="90" y1="50" y2="50" />
+        <line class="axis" x1="50" x2="50" y1="10" y2="90" />
+        <circle class="origin" cx="50" cy="50" r="1.2" />
+        @for (point of plotPoints(); track point.id) {
+          <circle
+            class="response-point"
+            r="1.6"
+            [attr.cx]="point.plotX"
+            [attr.cy]="point.plotY"
+            [attr.opacity]="pointOpacity()"
+            [class.new-point]="point.id === latestPointId()"
+          />
+        }
+      </svg>
+    </div>
+
+    <div class="legend">
+      <span><i class="dot-example"></i> één anonieme inzending</span>
+      <span><i class="density-example"></i> hogere dichtheid</span>
+    </div>
+  </section>
+
+  <section aria-label="Uitleg van de assen" class="explanation-grid">
+    <article>
+      <span aria-hidden="true" class="explanation-icon">↔</span>
+      <div><h2>Theorie of praktijk</h2><p>Links ligt de nadruk op kennis en toetsen; rechts op echte beroepsopdrachten, vaardigheden en leren in het werkveld.</p></div>
+    </article>
+    <article>
+      <span aria-hidden="true" class="explanation-icon">↕</span>
+      <div><h2>Behoudend of vernieuwend</h2><p>Onder ligt de nadruk op bewezen, vaste werkwijzen; boven op autonomie, digitale middelen, AI en actuele vernieuwing.</p></div>
+    </article>
+    <article class="privacy-note">
+      <span aria-hidden="true" class="explanation-icon">✓</span>
+      <div><h2>Privacy als uitgangspunt</h2><p>Alleen de twee berekende coördinaten en een willekeurige technische code worden bewaard. Een stip is niet naar een persoon te herleiden.</p></div>
+    </article>
+  </section>
+
+  <a class="questionnaire-link" routerLink="/">Zelf het ROC Kompas invullen <span aria-hidden="true">→</span></a>
+</main>

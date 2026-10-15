@@ -16,7 +16,7 @@ export class RocKompasPageService {
     return this.http.get<Statement>('/statements', { params });
   }
 
-  public getMatchingResults(answers: readonly AnswerSubmission[]): Observable<MatchingResult> {
-    return this.http.post<MatchingResult>('/matching', { answers });
+  public getMatchingResults(answers: readonly AnswerSubmission[], submissionId: string): Observable<MatchingResult> {
+    return this.http.post<MatchingResult>('/matching', { answers, submissionId });
   }
 }

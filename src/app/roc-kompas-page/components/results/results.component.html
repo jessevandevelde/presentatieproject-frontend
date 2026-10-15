@@ -101,9 +101,15 @@
       </section>
     }
 
-    <button class="restart-button" type="button" (click)="restartQuestionnaire()">
-      <span aria-hidden="true">↻</span>
-      Stellingen opnieuw doorlopen
-    </button>
+    <div class="result-actions">
+      <a class="insights-button" routerLink="/visualisatie">
+        Bekijk alle anonieme resultaten
+        <span aria-hidden="true">→</span>
+      </a>
+      <button class="restart-button" type="button" (click)="restartQuestionnaire()">
+        <span aria-hidden="true">↻</span>
+        Stellingen opnieuw doorlopen
+      </button>
+    </div>
   </div>
 </main>

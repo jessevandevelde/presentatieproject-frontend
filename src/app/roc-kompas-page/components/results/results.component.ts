@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import type { AnswerSummary, MatchingResult, ProfileMatch } from '../../../types/matching.interface';
 
 interface SpectrumPoint {
@@ -35,6 +36,7 @@ function positionFor(match: ProfileMatch): ProfilePosition {
 
 @Component({
   selector: 'rck-results',
+  imports: [RouterLink],
   templateUrl: './results.component.html',
   styleUrl: './results.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

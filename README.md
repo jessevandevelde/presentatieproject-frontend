@@ -7,6 +7,8 @@ Angular-frontend voor ROC Kompas van ROC Midden Nederland. Studenten en betrokke
 
 De stellingen behandelen vakkennis, houding en werknemersvaardigheden, communicatie en samenwerking, zelfstandigheid, BPV-begeleiding, contact tussen bedrijf en school, aansluiting op het werkveld en nieuwe technieken zoals AI.
 
+Op `/visualisatie` staat de responsive liveweergave van alle anonieme inzendingen. De pagina gebruikt een WebSocket met automatische reconnect, dedupliceert punten en combineert individuele stippen met een dichtheidslaag wanneer antwoorden overlappen.
+
 ## Starten
 
 Start eerst de backend en voer daarna in deze map uit:
