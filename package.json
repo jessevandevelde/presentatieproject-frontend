@@ -1,8 +1,8 @@
 {
-  "name": "stemwijzer",
+  "name": "roc-kompas-frontend",
   "version": "0.0.0",
   "private": true,
-  "description": "Angular frontend voor Stemwijzer",
+  "description": "Angular frontend voor ROC Kompas van ROC Midden Nederland",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host 127.0.0.1 --proxy-config proxy.conf.json",

@@ -3,11 +3,11 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "stemwijzer": {
+    "roc-kompas": {
       "projectType": "application",
       "root": "",
       "sourceRoot": "src",
-      "prefix": "stw",
+      "prefix": "rck",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:application",
@@ -58,10 +58,10 @@
           },
           "configurations": {
             "production": {
-              "buildTarget": "stemwijzer:build:production"
+              "buildTarget": "roc-kompas:build:production"
             },
             "development": {
-              "buildTarget": "stemwijzer:build:development"
+              "buildTarget": "roc-kompas:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -69,7 +69,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "stemwijzer:build"
+            "buildTarget": "roc-kompas:build"
           }
         },
         "test": {
@@ -108,13 +108,13 @@
   "schematics": {
     "@schematics/angular:component": {
       "type": "component",
-      "prefix": "stw",
+      "prefix": "rck",
       "style": "css",
       "skipTests": false
     },
     "@schematics/angular:directive": {
       "type": "directive",
-      "prefix": "stw"
+      "prefix": "rck"
     },
     "@schematics/angular:service": {
       "type": "service",

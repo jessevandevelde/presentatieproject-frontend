@@ -16,7 +16,7 @@ bootstrapApplication(AppComponent, {
     provideEffects(),
     importProvidersFrom([
       StoreDevtoolsModule.instrument({
-        name: 'Stemwijzer',
+        name: 'ROC Kompas',
         maxAge: 25,
         logOnly: false,
         serialize: true,

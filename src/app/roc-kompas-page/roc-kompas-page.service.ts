@@ -7,7 +7,7 @@ import type { Statement } from '../types/statement.interface';
 @Injectable({
   providedIn: 'root',
 })
-export class StemwijzerPageService {
+export class RocKompasPageService {
   private readonly http = inject(HttpClient);
 
   public getStatement(index: number): Observable<Statement> {

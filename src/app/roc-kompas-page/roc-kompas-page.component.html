@@ -1,5 +1,5 @@
 @if (matchingResult(); as result) {
-  <stw-results
+  <rck-results
     (restart)="restartQuestionnaire()"
     [answerSummary]="answerSummary()"
     [matchingResult]="result"
@@ -18,8 +18,8 @@
     </button>
 
     <div class="header-title">
-      <h1>Stelling Sessie</h1>
-      <span>ProDemos StemWijzer</span>
+      <h1>ROC Kompas</h1>
+      <span>ROC Midden Nederland</span>
     </div>
   </div>
 </header>
@@ -29,7 +29,7 @@
     <div class="progress-block">
       <span class="progress-label">{{ progressLabel() }}</span>
       <svg
-        aria-label="Voortgang StemWijzer"
+        aria-label="Voortgang ROC Kompas"
         class="progress-track"
         preserveAspectRatio="none"
         role="progressbar"
@@ -47,7 +47,7 @@
       <div aria-live="polite" class="statement-card result-loading-card">
         <span aria-hidden="true" class="result-loading-icon">✦</span>
         <h2>Jouw uitslag wordt berekend</h2>
-        <p>We vergelijken je antwoorden met de standpunten van de partijen.</p>
+        <p>We vergelijken je antwoorden met vier onderwijs- en werkveldprofielen.</p>
         <span aria-hidden="true" class="loading-line"></span>
       </div>
     } @else if (matchingError(); as message) {
@@ -79,11 +79,11 @@
           <button
             class="detail-button"
             type="button"
-            (click)="toggleParties()"
-            [attr.aria-expanded]="partiesVisible()"
+            (click)="toggleProfiles()"
+            [attr.aria-expanded]="profilesVisible()"
           >
             <span aria-hidden="true" class="icon detail-icon">◫</span>
-            <span>Wat vinden partijen?</span>
+            <span>Bekijk de profielen</span>
           </button>
           <button
             class="detail-button"
@@ -102,32 +102,32 @@
           <span aria-hidden="true" class="icon panel-icon">✦</span>
           <div>
             <h3>Over deze stelling</h3>
-            <p>Lees de stelling zorgvuldig en kies het antwoord dat het beste bij jouw mening past. Je kunt altijd teruggaan om je keuze te wijzigen.</p>
+            <p>Lees de stelling zorgvuldig en kies wat volgens jou het beste werkt voor studenten, school en leerbedrijven. Je kunt altijd teruggaan om je keuze te wijzigen.</p>
           </div>
         </aside>
       }
 
-      @if (partiesVisible()) {
+      @if (profilesVisible()) {
         <aside class="party-panel">
           <div class="party-row">
             <span aria-hidden="true" class="stance-dot agree"></span>
             <div>
               <strong>Eens</strong>
-              <p>{{ partyNames('eens') }}</p>
+              <p>{{ profileNames('eens') }}</p>
             </div>
           </div>
           <div class="party-row">
             <span aria-hidden="true" class="stance-dot neutral"></span>
             <div>
               <strong>Geen van beide</strong>
-              <p>{{ partyNames('neutraal') }}</p>
+              <p>{{ profileNames('neutraal') }}</p>
             </div>
           </div>
           <div class="party-row">
             <span aria-hidden="true" class="stance-dot disagree"></span>
             <div>
               <strong>Oneens</strong>
-              <p>{{ partyNames('oneens') }}</p>
+              <p>{{ profileNames('oneens') }}</p>
             </div>
           </div>
         </aside>

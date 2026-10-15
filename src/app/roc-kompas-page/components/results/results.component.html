@@ -2,8 +2,8 @@
   <div class="header-content">
     <div aria-hidden="true" class="brand-mark">✓</div>
     <div class="brand-copy">
-      <span class="brand-name">StemWijzer</span>
-      <span class="brand-owner">ProDemos</span>
+      <span class="brand-name">ROC Kompas</span>
+      <span class="brand-owner">ROC Midden Nederland</span>
     </div>
     <div aria-hidden="true" class="profile-mark">●</div>
   </div>
@@ -22,10 +22,10 @@
     @if (bestMatch(); as winner) {
       <section aria-labelledby="best-match-heading" class="best-match-card">
         <div class="best-match-topline">
-          <span class="best-match-badge"><span aria-hidden="true">★</span> Beste match</span>
+          <span class="best-match-badge"><span aria-hidden="true">★</span> Jouw sterkste profiel</span>
           <strong class="best-match-score">{{ percentage(winner) }}%</strong>
         </div>
-        <h1 id="best-match-heading">{{ winner.partyName }}</h1>
+        <h1 id="best-match-heading">{{ winner.profileName }}</h1>
         <p>{{ winner.matchedAnswers }} van {{ winner.comparedAnswers }} antwoorden komen overeen</p>
         <svg aria-hidden="true" class="match-bar" preserveAspectRatio="none" viewBox="0 0 100 3">
           <line class="match-bar-background" x1="0" x2="100" y1="1.5" y2="1.5" />
@@ -38,16 +38,16 @@
         </div>
       </section>
 
-      <section aria-labelledby="other-parties-heading" class="other-parties">
+      <section aria-labelledby="other-profiles-heading" class="other-parties">
         <div class="section-heading-row">
-          <h2 id="other-parties-heading">Overige partijen</h2>
+          <h2 id="other-profiles-heading">Andere profielen</h2>
           <span>Overeenkomst</span>
         </div>
         <div class="party-match-list">
-          @for (match of otherMatches(); track match.partyId) {
+          @for (match of otherMatches(); track match.profileId) {
             <div class="party-match-row">
               <div class="party-match-copy">
-                <strong>{{ match.partyName }}</strong>
+                <strong>{{ match.profileName }}</strong>
                 <span>{{ percentage(match) }}%</span>
               </div>
               <svg aria-hidden="true" class="party-match-bar" preserveAspectRatio="none" viewBox="0 0 100 2">
@@ -61,17 +61,17 @@
 
       <section aria-labelledby="spectrum-heading" class="spectrum-card">
         <div class="spectrum-copy">
-          <span class="spectrum-eyebrow"><span aria-hidden="true">◇</span> Politiek spectrum</span>
-          <h2 id="spectrum-heading">Jouw vergelijkingsspectrum</h2>
-          <p>Een indicatieve spreiding van jouw partijmatches op basis van de beantwoorde stellingen.</p>
+          <span class="spectrum-eyebrow"><span aria-hidden="true">◇</span> Onderwijsspectrum</span>
+          <h2 id="spectrum-heading">Jouw onderwijs- en werkveldkompas</h2>
+          <p>Een indicatieve positie op basis van jouw antwoorden en de vier referentieprofielen.</p>
         </div>
 
         <div class="spectrum-frame">
-          <span class="axis-label axis-top">Vergelijkbaar antwoordpatroon</span>
-          <span class="axis-label axis-left">Minder overeenkomst</span>
-          <span class="axis-label axis-right">Meer overeenkomst</span>
-          <span class="axis-label axis-bottom">Ander antwoordpatroon</span>
-          <svg aria-label="Spectrum met jouw positie en de partijmatches" class="spectrum-plot" role="img" viewBox="0 0 100 100">
+          <span class="axis-label axis-top">Vernieuwend</span>
+          <span class="axis-label axis-left">Theoretisch</span>
+          <span class="axis-label axis-right">Praktisch</span>
+          <span class="axis-label axis-bottom">Behoudend</span>
+          <svg aria-label="Spectrum met jouw positie en de onderwijsprofielen" class="spectrum-plot" role="img" viewBox="0 0 100 100">
             <line class="spectrum-axis" x1="8" x2="92" y1="50" y2="50" />
             <line class="spectrum-axis" x1="50" x2="50" y1="8" y2="92" />
             @for (point of spectrumPoints(); track point.id) {
@@ -91,13 +91,13 @@
 
         <div class="spectrum-explanation">
           <span aria-hidden="true">✦</span>
-          <p><strong>Zo lees je het spectrum:</strong> partijen die dichter bij “Jij” staan, hebben een vergelijkbaarder antwoordpatroon. Het matchpercentage blijft leidend.</p>
+          <p><strong>Zo lees je het spectrum:</strong> links ligt de nadruk op theorie, rechts op praktijk. Boven staat vernieuwend en onder behoudend. Je positie is een indicatie, geen oordeel.</p>
         </div>
       </section>
     } @else {
       <section class="empty-results">
-        <h1>Geen partijen om te vergelijken</h1>
-        <p>Er zijn nog geen actieve partijen met partijantwoorden beschikbaar.</p>
+        <h1>Geen profielen om te vergelijken</h1>
+        <p>Er zijn nog geen actieve onderwijsprofielen met antwoorden beschikbaar.</p>
       </section>
     }
 

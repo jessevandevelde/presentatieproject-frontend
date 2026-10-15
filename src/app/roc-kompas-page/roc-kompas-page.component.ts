@@ -4,31 +4,31 @@ import type { Answer } from '../types/answer.interface';
 import type { AnswerSummary, MatchingResult } from '../types/matching.interface';
 import type { Statement } from '../types/statement.interface';
 import { ResultsComponent } from './components/results/results.component';
-import { StemwijzerPageService } from './stemwijzer-page.service';
+import { RocKompasPageService } from './roc-kompas-page.service';
 
 const TOTAL_STATEMENTS = 30;
 const FEEDBACK_DURATION_MS = 1800;
 const PROGRESS_MAX = 100;
 
 const TOPICS: readonly { readonly keywords: readonly string[], readonly label: string }[] = [
-  { keywords: ['woning', 'wonen', 'hypotheek'], label: 'Wonen & huisvesting' },
-  { keywords: ['immigratie', 'asiel', 'vluchteling'], label: 'Migratie & asiel' },
-  { keywords: ['minimumloon', 'inkomen', 'belasting', 'bedrijven'], label: 'Economie & inkomen' },
-  { keywords: ['zorg', 'eigen risico'], label: 'Gezondheidszorg' },
-  { keywords: ['kernenergie', 'fossiele', 'stikstof', 'co₂', 'energie'], label: 'Klimaat & energie' },
-  { keywords: ['onderwijs', 'studenten', 'kinderopvang'], label: 'Onderwijs & kansen' },
-  { keywords: ['politie', 'criminaliteit', 'gezichtsherkenning'], label: 'Veiligheid & rechtsstaat' },
-  { keywords: ['referendum', 'europese unie'], label: 'Democratie & bestuur' },
+  { keywords: ['vakkennis', 'theorie', 'vakinhoud', 'kennistoets'], label: 'Vakkennis van studenten' },
+  { keywords: ['werkhouding', 'werknemersvaardigheden', 'afspraken', 'fouten'], label: 'Houding & werknemersvaardigheden' },
+  { keywords: ['communicatie', 'samenwerken', 'team', 'gesprek'], label: 'Communicatie & samenwerking' },
+  { keywords: ['zelfstandig', 'zelfstandigheid', 'stappenplan', 'oplossing'], label: 'Zelfstandigheid' },
+  { keywords: ['bpv', 'stage', 'praktijkbegeleider', 'portfolio'], label: 'Begeleiding tijdens de stage (BPV)' },
+  { keywords: ['bedrijf en school', 'leerbedrijf', 'school en bedrijf'], label: 'Contact tussen bedrijf en school' },
+  { keywords: ['werkveld', 'beroepspraktijk', 'docenten'], label: 'Aansluiting op het werkveld' },
+  { keywords: ['ai', 'nieuwe technieken', 'innovatie'], label: 'Nieuwe technieken, zoals AI' },
 ];
 
 @Component({
-  selector: 'stw-stemwijzer-page',
+  selector: 'rck-roc-kompas-page',
   imports: [ResultsComponent],
-  templateUrl: './stemwijzer-page.component.html',
-  styleUrl: './stemwijzer-page.component.css',
+  templateUrl: './roc-kompas-page.component.html',
+  styleUrl: './roc-kompas-page.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StemwijzerPageComponent implements OnInit {
+export class RocKompasPageComponent implements OnInit {
   protected readonly currentIndex = signal(0);
 
   protected readonly statement = signal<Statement | null>(null);
@@ -39,7 +39,7 @@ export class StemwijzerPageComponent implements OnInit {
 
   protected readonly explanationVisible = signal(false);
 
-  protected readonly partiesVisible = signal(false);
+  protected readonly profilesVisible = signal(false);
 
   protected readonly feedbackMessage = signal<string | null>(null);
 
@@ -59,7 +59,7 @@ export class StemwijzerPageComponent implements OnInit {
     const statementText = this.statement()?.text.toLowerCase() ?? '';
     const topic = TOPICS.find(item => item.keywords.some(keyword => statementText.includes(keyword)));
 
-    return topic?.label ?? 'Politiek & samenleving';
+    return topic?.label ?? 'Leren & werken';
   });
 
   protected readonly answerSummary = computed<AnswerSummary>(() => {
@@ -77,7 +77,7 @@ export class StemwijzerPageComponent implements OnInit {
     };
   });
 
-  private readonly service = inject(StemwijzerPageService);
+  private readonly service = inject(RocKompasPageService);
 
   private readonly answers = new Map<number, Answer>();
 
@@ -148,27 +148,27 @@ export class StemwijzerPageComponent implements OnInit {
 
   protected toggleExplanation(): void {
     this.explanationVisible.update(visible => !visible);
-    this.partiesVisible.set(false);
+    this.profilesVisible.set(false);
   }
 
-  protected toggleParties(): void {
-    this.partiesVisible.update(visible => !visible);
+  protected toggleProfiles(): void {
+    this.profilesVisible.update(visible => !visible);
     this.explanationVisible.set(false);
   }
 
-  protected partyNames(answer: Answer): string {
-    const names = this.statement()?.partyAnswers
-      .filter(partyAnswer => partyAnswer.answer === answer)
-      .map(partyAnswer => partyAnswer.partyName) ?? [];
+  protected profileNames(answer: Answer): string {
+    const names = this.statement()?.profileAnswers
+      .filter(profileAnswer => profileAnswer.answer === answer)
+      .map(profileAnswer => profileAnswer.profileName) ?? [];
 
-    return names.length > 0 ? names.join(', ') : 'Nog geen partijstandpunten';
+    return names.length > 0 ? names.join(', ') : 'Nog geen profielantwoorden';
   }
 
   private loadStatement(index: number): void {
     this.loading.set(true);
     this.errorMessage.set(null);
     this.explanationVisible.set(false);
-    this.partiesVisible.set(false);
+    this.profilesVisible.set(false);
 
     this.service.getStatement(index).subscribe({
       next: (statement) => {

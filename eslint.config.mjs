@@ -126,7 +126,7 @@ export default defineConfig(
         'error',
         {
           type: 'attribute',
-          prefix: 'stw',
+          prefix: 'rck',
           style: 'camelCase',
         },
       ],
@@ -134,7 +134,7 @@ export default defineConfig(
         'error',
         {
           type: 'element',
-          prefix: 'stw',
+          prefix: 'rck',
           style: 'kebab-case',
         },
       ],
