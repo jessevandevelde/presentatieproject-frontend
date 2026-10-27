@@ -26,7 +26,7 @@
     <div class="card-heading">
       <div>
         <h2 id="plot-title">Alle anonieme posities</h2>
-        <p>Gebieden met meer overlap krijgen een diepere blauwe gloed.</p>
+        <p>Elke stip toont één volledig afgeronde, anonieme vragenlijst.</p>
       </div>
       <span class="live-status" [class.offline]="!connected()">
         <span aria-hidden="true"></span>
@@ -53,18 +53,6 @@
         <rect class="quadrant quadrant-two" height="40" width="40" x="50" y="10" />
         <rect class="quadrant quadrant-three" height="40" width="40" x="10" y="50" />
         <rect class="quadrant quadrant-four" height="40" width="40" x="50" y="50" />
-        @for (cell of heatCells(); track $index) {
-          <rect
-            class="heat-cell"
-            height="8"
-            width="8"
-            [attr.opacity]="cell.opacity"
-            [attr.x]="cell.x"
-            [attr.y]="cell.y"
-          >
-            <title>{{ cell.count }} {{ cell.count === 1 ? 'positie' : 'posities' }} in dit gebied</title>
-          </rect>
-        }
         <line class="axis" x1="10" x2="90" y1="50" y2="50" />
         <line class="axis" x1="50" x2="50" y1="10" y2="90" />
         <circle class="origin" cx="50" cy="50" r="1.2" />
@@ -74,6 +62,7 @@
             r="1.6"
             [attr.cx]="point.plotX"
             [attr.cy]="point.plotY"
+            [attr.fill]="point.color"
             [attr.opacity]="pointOpacity()"
             [class.new-point]="point.id === latestPointId()"
           />
@@ -83,7 +72,6 @@
 
     <div class="legend">
       <span><i class="dot-example"></i> één anonieme inzending</span>
-      <span><i class="density-example"></i> hogere dichtheid</span>
     </div>
   </section>
 

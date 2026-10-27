@@ -6,29 +6,35 @@ import type { VisualizationPoint } from '../types/visualization.interface';
 import { VisualizationPageService } from './visualization-page.service';
 
 interface PlotPoint extends VisualizationPoint {
+  readonly color: string
   readonly plotX: number
   readonly plotY: number
-}
-
-interface HeatCell {
-  readonly count: number
-  readonly opacity: number
-  readonly x: number
-  readonly y: number
 }
 
 const plotMinimum = 10;
 const plotSize = 80;
 const coordinateRange = 200;
 const coordinateMaximum = 100;
-const heatGridSize = 10;
-const heatCellSize = plotSize / heatGridSize;
 const newPointAnimationMs = 1800;
 const minimumPointOpacity = 0.16;
 const maximumPointOpacity = 0.72;
 const opacityDensityFactor = 18;
-const minimumHeatOpacity = 0.08;
-const heatOpacityRange = 0.3;
+const hueStep = 137.508;
+const hueMaximum = 360;
+const saturationMinimum = 68;
+const saturationSteps = 3;
+const saturationStep = 6;
+const lightnessMinimum = 40;
+const lightnessSteps = 4;
+const lightnessStep = 4;
+
+const pointColor = (index: number): string => {
+  const hue = index * hueStep % hueMaximum;
+  const saturation = saturationMinimum + index % saturationSteps * saturationStep;
+  const lightness = lightnessMinimum + index % lightnessSteps * lightnessStep;
+
+  return `hsl(${hue.toFixed(1)}deg ${String(saturation)}% ${String(lightness)}%)`;
+};
 
 @Component({
   selector: 'rck-visualization-page',
@@ -48,8 +54,9 @@ export class VisualizationPageComponent implements OnInit, OnDestroy {
 
   protected readonly total = computed(() => this.points().length);
 
-  protected readonly plotPoints = computed<readonly PlotPoint[]>(() => this.points().map(point => ({
+  protected readonly plotPoints = computed<readonly PlotPoint[]>(() => this.points().map((point, index) => ({
     ...point,
+    color: pointColor(index),
     plotX: plotMinimum + (point.x + coordinateMaximum) / coordinateRange * plotSize,
     plotY: plotMinimum + (coordinateMaximum - point.y) / coordinateRange * plotSize,
   })));
@@ -58,33 +65,6 @@ export class VisualizationPageComponent implements OnInit, OnDestroy {
     minimumPointOpacity,
     Math.min(maximumPointOpacity, opacityDensityFactor / Math.sqrt(Math.max(this.total(), 1))),
   ));
-
-  protected readonly heatCells = computed<readonly HeatCell[]>(() => {
-    const counts = new Map<string, number>();
-
-    for (const point of this.plotPoints()) {
-      const column = Math.min(heatGridSize - 1, Math.max(0, Math.floor((point.plotX - plotMinimum) / heatCellSize)));
-      const row = Math.min(heatGridSize - 1, Math.max(0, Math.floor((point.plotY - plotMinimum) / heatCellSize)));
-      const key = `${String(column)}:${String(row)}`;
-
-      counts.set(key, (counts.get(key) ?? 0) + 1);
-    }
-
-    const maximum = Math.max(1, ...counts.values());
-
-    return [...counts.entries()].map(([key, count]) => {
-      const [columnText, rowText] = key.split(':');
-      const column = Number(columnText);
-      const row = Number(rowText);
-
-      return {
-        count,
-        opacity: minimumHeatOpacity + count / maximum * heatOpacityRange,
-        x: plotMinimum + column * heatCellSize,
-        y: plotMinimum + row * heatCellSize,
-      };
-    });
-  });
 
   private readonly service = inject(VisualizationPageService);
 

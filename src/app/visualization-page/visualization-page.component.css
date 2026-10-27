@@ -209,11 +209,6 @@
 .quadrant-three { fill: #f4f1fb; }
 .quadrant-four { fill: #fff4eb; }
 
-.heat-cell {
-  fill: var(--color-primary);
-  pointer-events: none;
-}
-
 .axis {
   stroke: color-mix(in srgb, var(--color-primary) 26%, var(--color-outline-soft));
   stroke-width: 0.45;
@@ -226,7 +221,6 @@
 }
 
 .response-point {
-  fill: var(--color-primary);
   stroke: var(--color-surface-card);
   stroke-width: 0.55;
   transition: opacity 180ms ease;
@@ -234,7 +228,6 @@
 
 .response-point.new-point {
   animation: arrive 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-  fill: var(--color-agree);
   opacity: 1;
 }
 
@@ -323,14 +316,7 @@
   width: 0.6rem;
   height: 0.6rem;
   border-radius: 50%;
-  background: var(--color-primary);
-}
-
-.density-example {
-  width: 1.1rem;
-  height: 0.65rem;
-  border-radius: 0.2rem;
-  background: rgb(0 40 142 / 28%);
+  background: linear-gradient(135deg, #0047bb 0 33%, #d43f8d 33% 66%, #00856a 66%);
 }
 
 .explanation-grid {
