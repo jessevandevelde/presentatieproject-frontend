@@ -1,70 +1,55 @@
 <header class="results-header">
   <div class="header-content">
-    <div aria-hidden="true" class="brand-mark">✓</div>
-    <div class="brand-copy">
-      <span class="brand-name">ROC Kompas</span>
-      <span class="brand-owner">ROC Midden Nederland</span>
-    </div>
-    <div aria-hidden="true" class="profile-mark">●</div>
+    <span class="brand-name">ROC Kompas</span>
+    <span class="brand-owner">ROC Midden Nederland</span>
   </div>
 </header>
 
 <main class="results-main">
   <div class="results-content">
-    <div class="completion-banner">
-      <div>
-        <span aria-hidden="true" class="completion-icon">✓</span>
-        <span>{{ matchingResult().totalAnswers }} van {{ answerSummary().total }} stellingen beantwoord</span>
-      </div>
-      <span class="calculated-badge">Berekend</span>
-    </div>
+    <p class="completion-text">
+      Je hebt {{ matchingResult().totalAnswers }} van de {{ answerSummary().total }} stellingen beantwoord.
+    </p>
 
     @if (bestMatch(); as winner) {
-      <section aria-labelledby="best-match-heading" class="best-match-card">
-        <div class="best-match-topline">
-          <span class="best-match-badge"><span aria-hidden="true">★</span> Jouw sterkste profiel</span>
-          <strong class="best-match-score">{{ percentage(winner) }}%</strong>
+      <section aria-labelledby="best-match-heading" class="card best-match-card">
+        <p class="best-match-label">Jouw uitslag</p>
+        <div class="best-match-title">
+          <h1 id="best-match-heading">{{ winner.profileName }}</h1>
+          <span class="best-match-score">{{ percentage(winner) }}%</span>
         </div>
-        <h1 id="best-match-heading">{{ winner.profileName }}</h1>
-        <p>{{ winner.matchedAnswers }} van {{ winner.comparedAnswers }} antwoorden komen overeen</p>
-        <svg aria-hidden="true" class="match-bar" preserveAspectRatio="none" viewBox="0 0 100 3">
-          <line class="match-bar-background" x1="0" x2="100" y1="1.5" y2="1.5" />
-          <line class="match-bar-value" x1="0" y1="1.5" y2="1.5" [attr.x2]="percentage(winner)" />
-        </svg>
-        <div class="answer-breakdown">
-          <span>{{ answerSummary().agree }} eens</span>
-          <span>{{ answerSummary().neutral }} neutraal</span>
-          <span>{{ answerSummary().disagree }} oneens</span>
+        <p class="best-match-text">{{ winner.matchedAnswers }} van de {{ winner.comparedAnswers }} antwoorden komen overeen met dit profiel.</p>
+        <div class="bar">
+          <div class="bar-fill" [style.width.%]="percentage(winner)"></div>
         </div>
+        <p class="answer-breakdown">
+          Je antwoorden: {{ answerSummary().agree }} eens, {{ answerSummary().neutral }} neutraal en {{ answerSummary().disagree }} oneens.
+        </p>
       </section>
 
-      <section aria-labelledby="other-profiles-heading" class="other-parties">
-        <div class="section-heading-row">
-          <h2 id="other-profiles-heading">Andere profielen</h2>
-          <span>Overeenkomst</span>
-        </div>
-        <div class="party-match-list">
+      <section aria-labelledby="other-profiles-heading" class="card">
+        <h2 id="other-profiles-heading">Andere profielen</h2>
+        <ul class="profile-list">
           @for (match of otherMatches(); track match.profileId) {
-            <div class="party-match-row">
-              <div class="party-match-copy">
-                <strong>{{ match.profileName }}</strong>
+            <li>
+              <div class="profile-row">
+                <span>{{ match.profileName }}</span>
                 <span>{{ percentage(match) }}%</span>
               </div>
-              <svg aria-hidden="true" class="party-match-bar" preserveAspectRatio="none" viewBox="0 0 100 2">
-                <line class="party-bar-background" x1="0" x2="100" y1="1" y2="1" />
-                <line class="party-bar-value" x1="0" y1="1" y2="1" [attr.x2]="percentage(match)" />
-              </svg>
-            </div>
+              <div class="bar bar-small">
+                <div class="bar-fill" [style.width.%]="percentage(match)"></div>
+              </div>
+            </li>
           }
-        </div>
+        </ul>
       </section>
 
-      <section aria-labelledby="spectrum-heading" class="spectrum-card">
-        <div class="spectrum-copy">
-          <span class="spectrum-eyebrow"><span aria-hidden="true">◇</span> Onderwijsspectrum</span>
-          <h2 id="spectrum-heading">Jouw onderwijs- en werkveldkompas</h2>
-          <p>Een indicatieve positie op basis van jouw antwoorden en de vier referentieprofielen.</p>
-        </div>
+      <section aria-labelledby="spectrum-heading" class="card">
+        <h2 id="spectrum-heading">Waar sta jij?</h2>
+        <p class="spectrum-intro">
+          Hieronder zie je waar jij ongeveer staat ten opzichte van de vier profielen.
+          Links is meer theoretisch, rechts meer praktisch. Boven is vernieuwend, onder is behoudend.
+        </p>
 
         <div class="spectrum-frame">
           <span class="axis-label axis-top">Vernieuwend</span>
@@ -78,38 +63,29 @@
               <g class="party-point">
                 <title>{{ point.name }}</title>
                 <circle r="4.5" [attr.cx]="point.x" [attr.cy]="point.y" />
-                <text text-anchor="middle" [attr.x]="point.x" [attr.y]="point.y + 1.5">{{ point.label }}</text>
+                <text text-anchor="middle" [attr.x]="point.x" [attr.y]="point.y + 1.2">{{ point.label }}</text>
               </g>
             }
             <g class="user-point">
               <title>Jouw positie</title>
-              <circle r="6" [attr.cx]="userPoint().x" [attr.cy]="userPoint().y" />
-              <text text-anchor="middle" [attr.x]="userPoint().x" [attr.y]="userPoint().y + 1.5">Jij</text>
+              <circle r="5.5" [attr.cx]="userPoint().x" [attr.cy]="userPoint().y" />
+              <text text-anchor="middle" [attr.x]="userPoint().x" [attr.y]="userPoint().y + 1.2">Jij</text>
             </g>
           </svg>
         </div>
 
-        <div class="spectrum-explanation">
-          <span aria-hidden="true">✦</span>
-          <p><strong>Zo lees je het spectrum:</strong> links ligt de nadruk op theorie, rechts op praktijk. Boven staat vernieuwend en onder behoudend. Je positie is een indicatie, geen oordeel.</p>
-        </div>
+        <p class="spectrum-note">Let op: dit is maar een indicatie op basis van je antwoorden.</p>
       </section>
     } @else {
-      <section class="empty-results">
+      <section class="card empty-results">
         <h1>Geen profielen om te vergelijken</h1>
         <p>Er zijn nog geen actieve onderwijsprofielen met antwoorden beschikbaar.</p>
       </section>
     }
 
     <div class="result-actions">
-      <a class="insights-button" routerLink="/visualisatie">
-        Bekijk alle anonieme resultaten
-        <span aria-hidden="true">→</span>
-      </a>
-      <button class="restart-button" type="button" (click)="restartQuestionnaire()">
-        <span aria-hidden="true">↻</span>
-        Stellingen opnieuw doorlopen
-      </button>
+      <a class="button button-primary" routerLink="/visualisatie">Bekijk alle anonieme resultaten</a>
+      <button class="button button-secondary" type="button" (click)="restartQuestionnaire()">Opnieuw beginnen</button>
     </div>
   </div>
 </main>

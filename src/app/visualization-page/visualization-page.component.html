@@ -1,20 +1,16 @@
 <header class="insights-header">
   <div class="header-content">
-    <a aria-label="Terug naar de vragenlijst" class="back-link" routerLink="/">←</a>
-    <div class="brand-copy">
-      <strong>ROC Kompas</strong>
-      <span>Live inzichten</span>
-    </div>
-    <span class="privacy-pill"><span aria-hidden="true">●</span> Volledig anoniem</span>
+    <span class="brand-name">ROC Kompas</span>
+    <span class="brand-owner">Anonieme resultaten</span>
+    <a class="back-link" routerLink="/">Terug naar de vragenlijst</a>
   </div>
 </header>
 
 <main class="insights-main">
   <section aria-labelledby="insights-title" class="intro">
     <div>
-      <span class="eyebrow">Onderwijs- en werkveldkompas</span>
-      <h1 id="insights-title">Zo denkt onze community</h1>
-      <p>Elke stip is één volledig afgeronde vragenlijst. Nieuwe resultaten verschijnen direct, zonder persoonsgegevens of individuele antwoorden.</p>
+      <h1 id="insights-title">Hoe denken anderen erover?</h1>
+      <p>Op deze pagina zie je de uitslagen van iedereen die de vragenlijst heeft ingevuld. Elke stip is één ingevulde vragenlijst. Er worden geen namen of losse antwoorden opgeslagen.</p>
     </div>
     <div aria-live="polite" class="response-count">
       <strong>{{ total() }}</strong>
@@ -22,25 +18,19 @@
     </div>
   </section>
 
-  <section aria-labelledby="plot-title" class="visualization-card">
+  <section aria-labelledby="plot-title" class="card visualization-card">
     <div class="card-heading">
-      <div>
-        <h2 id="plot-title">Alle anonieme posities</h2>
-        <p>Elke stip toont één volledig afgeronde, anonieme vragenlijst.</p>
-      </div>
+      <h2 id="plot-title">Alle uitslagen</h2>
       <span class="live-status" [class.offline]="!connected()">
-        <span aria-hidden="true"></span>
-        {{ connected() ? 'Live verbonden' : 'Verbinden…' }}
+        <span aria-hidden="true" class="status-dot"></span>
+        {{ connected() ? 'Live' : 'Verbinden...' }}
       </span>
     </div>
 
     @if (!receivedSnapshot()) {
-      <div aria-live="polite" class="plot-state">Live resultaten laden…</div>
+      <p aria-live="polite" class="plot-state">Resultaten worden geladen...</p>
     } @else if (total() === 0) {
-      <div class="plot-state">
-        <strong>Nog geen inzendingen</strong>
-        <span>De eerste afgeronde vragenlijst verschijnt hier automatisch.</span>
-      </div>
+      <p class="plot-state">Er zijn nog geen inzendingen. Zodra iemand de vragenlijst afrondt, verschijnt die hier.</p>
     }
 
     <div class="plot-frame" [class.empty]="total() === 0">
@@ -55,7 +45,6 @@
         <rect class="quadrant quadrant-four" height="40" width="40" x="50" y="50" />
         <line class="axis" x1="10" x2="90" y1="50" y2="50" />
         <line class="axis" x1="50" x2="50" y1="10" y2="90" />
-        <circle class="origin" cx="50" cy="50" r="1.2" />
         @for (point of plotPoints(); track point.id) {
           <circle
             class="response-point"
@@ -69,26 +58,24 @@
         }
       </svg>
     </div>
-
-    <div class="legend">
-      <span><i class="dot-example"></i> één anonieme inzending</span>
-    </div>
   </section>
 
-  <section aria-label="Uitleg van de assen" class="explanation-grid">
-    <article>
-      <span aria-hidden="true" class="explanation-icon">↔</span>
-      <div><h2>Theorie of praktijk</h2><p>Links ligt de nadruk op kennis en toetsen; rechts op echte beroepsopdrachten, vaardigheden en leren in het werkveld.</p></div>
+  <section aria-label="Uitleg" class="explanation-grid">
+    <article class="card">
+      <h2>Theoretisch of praktisch</h2>
+      <p>Links gaat het meer om kennis en toetsen. Rechts gaat het meer om echte opdrachten, vaardigheden en leren in de praktijk.</p>
     </article>
-    <article>
-      <span aria-hidden="true" class="explanation-icon">↕</span>
-      <div><h2>Behoudend of vernieuwend</h2><p>Onder ligt de nadruk op bewezen, vaste werkwijzen; boven op autonomie, digitale middelen, AI en actuele vernieuwing.</p></div>
+    <article class="card">
+      <h2>Behoudend of vernieuwend</h2>
+      <p>Onder gaat het om vaste, bekende manieren van werken. Boven gaat het om zelfstandigheid, digitale middelen, AI en nieuwe ideeën.</p>
     </article>
-    <article class="privacy-note">
-      <span aria-hidden="true" class="explanation-icon">✓</span>
-      <div><h2>Privacy als uitgangspunt</h2><p>Alleen de twee berekende coördinaten en een willekeurige technische code worden bewaard. Een stip is niet naar een persoon te herleiden.</p></div>
+    <article class="card privacy-note">
+      <h2>Privacy</h2>
+      <p>We slaan alleen de positie van de stip op en een willekeurige code. Je kunt een stip dus niet terugleiden naar een persoon.</p>
     </article>
   </section>
 
-  <a class="questionnaire-link" routerLink="/">Zelf het ROC Kompas invullen <span aria-hidden="true">→</span></a>
+  <div class="page-actions">
+    <a class="button button-primary" routerLink="/">Zelf de vragenlijst invullen</a>
+  </div>
 </main>
