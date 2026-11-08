@@ -12,3 +12,7 @@ export interface Statement {
   readonly text: string
   readonly profileAnswers: readonly ProfileAnswer[]
 }
+
+export interface Questionnaire {
+  readonly statements: readonly Statement[]
+}
