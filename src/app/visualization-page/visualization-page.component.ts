@@ -36,6 +36,8 @@ const pointColor = (index: number): string => {
   return `hsl(${hue.toFixed(1)}deg ${String(saturation)}% ${String(lightness)}%)`;
 };
 
+const maximumRenderedPoints = 5000;
+
 @Component({
   selector: 'rck-visualization-page',
   imports: [RouterLink],
@@ -52,7 +54,7 @@ export class VisualizationPageComponent implements OnInit, OnDestroy {
 
   protected readonly latestPointId = signal<string | null>(null);
 
-  protected readonly total = computed(() => this.points().length);
+  protected readonly total = computed(() => this.submissionTotal());
 
   protected readonly plotPoints = computed<readonly PlotPoint[]>(() => this.points().map((point, index) => ({
     ...point,
@@ -63,9 +65,10 @@ export class VisualizationPageComponent implements OnInit, OnDestroy {
 
   protected readonly pointOpacity = computed(() => Math.max(
     minimumPointOpacity,
-    Math.min(maximumPointOpacity, opacityDensityFactor / Math.sqrt(Math.max(this.total(), 1))),
+    Math.min(maximumPointOpacity, opacityDensityFactor / Math.sqrt(Math.max(this.points().length, 1))),
   ));
 
+  private readonly submissionTotal = signal(0);
   private readonly service = inject(VisualizationPageService);
 
   private subscription: Subscription | null = null;
@@ -82,15 +85,18 @@ export class VisualizationPageComponent implements OnInit, OnDestroy {
 
       if (message.type === 'snapshot') {
         this.points.set(this.uniquePoints(message.points));
+        this.submissionTotal.set(message.total);
         this.receivedSnapshot.set(true);
 
         return;
       }
 
       if (!this.points().some(point => point.id === message.point.id)) {
-        this.points.update(points => [...points, message.point]);
+        this.points.update(points => [...points, message.point].slice(-maximumRenderedPoints));
         this.animatePoint(message.point.id);
       }
+
+      this.submissionTotal.set(message.total);
     });
   }
 

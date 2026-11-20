@@ -80,6 +80,8 @@ export class RocKompasPageComponent implements OnInit {
 
   private readonly service = inject(RocKompasPageService);
 
+  private questionnaire: readonly Statement[] = [];
+
   private readonly answers = new Map<number, Answer>();
 
   private readonly skippedStatementIds = new Set<number>();
@@ -89,14 +91,14 @@ export class RocKompasPageComponent implements OnInit {
   private submissionId = crypto.randomUUID();
 
   public ngOnInit(): void {
-    this.loadStatement(0);
+    this.loadQuestionnaire();
   }
 
   protected goBack(): void {
     const previousIndex = this.currentIndex() - 1;
 
     if (previousIndex >= 0) {
-      this.loadStatement(previousIndex);
+      this.showStatement(previousIndex);
     }
   }
 
@@ -123,7 +125,7 @@ export class RocKompasPageComponent implements OnInit {
     const nextIndex = this.currentIndex() + 1;
 
     if (nextIndex < TOTAL_STATEMENTS) {
-      this.loadStatement(nextIndex);
+      this.showStatement(nextIndex);
 
       return;
     }
@@ -132,7 +134,7 @@ export class RocKompasPageComponent implements OnInit {
   }
 
   protected retry(): void {
-    this.loadStatement(this.currentIndex());
+    this.loadQuestionnaire();
   }
 
   protected retryMatching(): void {
@@ -147,7 +149,7 @@ export class RocKompasPageComponent implements OnInit {
     this.matchingError.set(null);
     this.feedbackMessage.set(null);
     this.submissionId = crypto.randomUUID();
-    this.loadStatement(0);
+    this.showStatement(0);
   }
 
   protected toggleExplanation(): void {
@@ -168,16 +170,16 @@ export class RocKompasPageComponent implements OnInit {
     return names.length > 0 ? names.join(', ') : 'Nog geen profielantwoorden';
   }
 
-  private loadStatement(index: number): void {
+  private loadQuestionnaire(): void {
     this.loading.set(true);
     this.errorMessage.set(null);
     this.explanationVisible.set(false);
     this.profilesVisible.set(false);
 
-    this.service.getStatement(index).subscribe({
-      next: (statement) => {
-        this.currentIndex.set(index);
-        this.statement.set(statement);
+    this.service.getQuestionnaire().subscribe({
+      next: (questionnaire) => {
+        this.questionnaire = questionnaire.statements;
+        this.showStatement(Math.min(this.currentIndex(), Math.max(this.questionnaire.length - 1, 0)));
         this.loading.set(false);
       },
       error: () => {
@@ -185,6 +187,24 @@ export class RocKompasPageComponent implements OnInit {
         this.errorMessage.set('De stelling kon niet worden geladen. Controleer de verbinding en probeer het opnieuw.');
       },
     });
+  }
+
+  private showStatement(index: number): void {
+    const statement = this.questionnaire.at(index);
+
+    if (statement === undefined) {
+      this.statement.set(null);
+      this.errorMessage.set('De vragenlijst bevat niet het verwachte aantal stellingen.');
+
+      return;
+    }
+
+    this.currentIndex.set(index);
+    this.statement.set(statement);
+    this.loading.set(false);
+    this.errorMessage.set(null);
+    this.explanationVisible.set(false);
+    this.profilesVisible.set(false);
   }
 
   private feedbackFor(answer: Answer): string {
