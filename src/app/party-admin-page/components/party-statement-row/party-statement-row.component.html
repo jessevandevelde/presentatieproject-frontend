@@ -1,0 +1,49 @@
+<article class="statement-row">
+  <div class="statement-main">
+    <div class="statement-copy">
+      <span class="statement-number">#{{ statement().statementId }}</span>
+      <p class="statement-text">{{ statement().text }}</p>
+    </div>
+    <div class="answer-group" role="group" [attr.aria-label]="`Standpunt voor stelling ${statement().statementId}`">
+      @for (option of answerOptions; track option.value) {
+        <button
+          type="button"
+          (click)="answerChosen.emit(option.value)"
+          [attr.aria-pressed]="statement().answer === option.value"
+          [class]="`answer-option answer-${option.value}`"
+          [class.answer-selected]="statement().answer === option.value"
+          [disabled]="busy()"
+        >
+          {{ option.label }}
+        </button>
+      }
+    </div>
+  </div>
+
+  @if (editing()) {
+    <div class="explanation-editor">
+      <label class="explanation-label" [attr.for]="`explanation-${statement().statementId}`">Uitleg bij jullie standpunt</label>
+      <textarea
+        class="explanation-input"
+        placeholder="Waarom kiest je partij voor dit standpunt? Kiezers zien deze tekst bij ‘Wat vinden de partijen?’."
+        rows="3"
+        (input)="updateDraft($event)"
+        [id]="`explanation-${statement().statementId}`"
+        [maxLength]="maxLength"
+        [value]="draft()"
+      ></textarea>
+      <div class="explanation-actions">
+        <span class="explanation-count">{{ draft().length }} / {{ maxLength }}</span>
+        <button class="text-button" type="button" (click)="cancelEditing()">Annuleren</button>
+        <button class="save-button" type="button" (click)="saveExplanation()" [disabled]="busy()">Uitleg opslaan</button>
+      </div>
+    </div>
+  } @else {
+    <div class="explanation-view">
+      <p class="explanation-text" [class.explanation-empty]="statement().explanation === null">
+        {{ statement().explanation ?? (statement().answer === null ? 'Kies eerst een standpunt om een uitleg toe te voegen.' : 'Nog geen uitleg voor kiezers.') }}
+      </p>
+      <button class="text-button" type="button" (click)="startEditing()" [disabled]="statement().answer === null || busy()">{{ explanationAction() }}</button>
+    </div>
+  }
+</article>

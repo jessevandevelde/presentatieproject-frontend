@@ -1,0 +1,9 @@
+<div class="user-avatar">
+  <span aria-hidden="true" class="initials">{{ initials() }}</span>
+  <span class="details">
+    <span class="name" [class.name-light]="tone() === 'light'">{{ name() }}</span>
+    @if (role()) {
+      <span class="role" [class.role-light]="tone() === 'light'">{{ role() }}</span>
+    }
+  </span>
+</div>

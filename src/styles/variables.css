@@ -18,3 +18,53 @@
   --content-width: 54rem;
   --page-gutter: 1rem;
 }
+
+/* Shared CMS design tokens. */
+:root {
+  --color-primary-hover: #0f1938;
+  --color-accent-blue: #3457d5;
+  --color-accent-red: #e0483e;
+  --color-accent-green: #1f9d55;
+  --color-background-from: #eef1f9;
+  --color-background-to: #f9fafc;
+  --color-border: #e3e6f0;
+  --color-border-strong: #c6cbdc;
+  --color-text-primary: #12162b;
+  --color-text-secondary: #4b5170;
+  --color-text-muted: #8a90a6;
+  --color-text-on-primary: #fff;
+  --color-field-background: #f2f4f9;
+  --color-danger: #d92d20;
+  --color-danger-background: #fdf1f0;
+  --color-focus-ring: rgb(52 87 213 / 35%);
+  --font-family-base: "Inter", -apple-system, blinkmacsystemfont, "Segoe UI", roboto, sans-serif;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.8125rem;
+  --font-size-md: 0.9375rem;
+  --font-size-lg: 1.0625rem;
+  --font-size-xl: 1.375rem;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.5;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
+  --radius-full: 999px;
+  --shadow-sm: 0 1px 2px rgb(18 22 43 / 6%);
+  --shadow-md: 0 12px 24px -8px rgb(18 22 43 / 12%);
+  --shadow-lg: 0 24px 48px -12px rgb(18 22 43 / 18%);
+  --transition-fast: 150ms ease;
+  --transition-base: 200ms ease;
+}

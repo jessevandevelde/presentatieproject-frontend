@@ -1,0 +1,47 @@
+@if (errorMessage(); as message) {
+  <stw-security-notice variant="error">{{ message }}</stw-security-notice>
+}
+
+@if (emptyMessage(); as message) {
+  <stw-empty-state [message]="message" />
+} @else {
+  <p class="answered-count">{{ answeredCount() }} van {{ answers().length }} beantwoord</p>
+
+  <ul class="answer-list">
+    @for (item of visibleAnswers(); track item.statementId) {
+      <li class="answer-card" [class.answer-card-saving]="isSaving(item.statementId)">
+        <div class="answer-heading">
+          <span class="answer-number">#{{ item.statementId }}</span>
+          <p class="answer-text">{{ item.statementText }}</p>
+          @if (!item.statementIsActive) {
+            <span class="answer-inactive">Inactief</span>
+          }
+        </div>
+
+        <div aria-label="Standpunt" class="answer-options" role="group">
+          @for (option of answerOptions; track option.value) {
+            <button
+              class="answer-option"
+              type="button"
+              (click)="selectAnswer(item, option.value)"
+              [attr.aria-pressed]="item.answer === option.value"
+              [attr.data-answer]="option.value"
+              [class.answer-option-selected]="item.answer === option.value"
+            >
+              {{ option.label }}
+            </button>
+          }
+        </div>
+      </li>
+    }
+  </ul>
+
+  <div class="pagination">
+    <p>Toont {{ rangeLabel() }} stellingen</p>
+    <div class="pagination-controls">
+      <button type="button" (click)="goToPreviousPage()" [disabled]="page() <= 1">Vorige</button>
+      <span>{{ page() }} / {{ totalPages() }}</span>
+      <button type="button" (click)="goToNextPage()" [disabled]="page() >= totalPages()">Volgende</button>
+    </div>
+  </div>
+}

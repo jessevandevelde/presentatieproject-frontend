@@ -1,0 +1,24 @@
+<section class="panel">
+  <div class="panel-header">
+    <div class="panel-heading">
+      <h2>Partijgegevens</h2>
+      <p>Pas de gegevens van je partij aan. Alleen ProDemos kan een partij activeren of deactiveren.</p>
+    </div>
+  </div>
+
+  @if (errorMessage(); as message) {
+    <stw-security-notice variant="error">{{ message }}</stw-security-notice>
+  }
+
+  @if (party(); as currentParty) {
+    <stw-party-form (submitForm)="handleSubmit($event)" [initialValue]="currentParty" [loading]="saving()" [showActiveToggle]="false" />
+    <div class="form-actions">
+      @if (saved()) {
+        <span class="saved-message" role="status">Opgeslagen</span>
+      }
+      <stw-button formId="party-form" type="submit" [loading]="saving()">Gegevens opslaan</stw-button>
+    </div>
+  } @else {
+    <stw-empty-state message="Partijgegevens laden…" />
+  }
+</section>

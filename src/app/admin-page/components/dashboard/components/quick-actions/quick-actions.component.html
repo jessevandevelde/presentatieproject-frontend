@@ -1,0 +1,16 @@
+<div class="quick-actions">
+  <stw-metric-card
+    actionLabel="Nieuwe stelling"
+    label="Totaal actief"
+    unit="Stellingen"
+    (actionClicked)="createStatement.emit()"
+    [value]="metrics().activeStatementCount"
+  />
+  <stw-metric-card
+    actionLabel="Nieuwe partij"
+    label="Geregistreerd"
+    unit="Partijen"
+    (actionClicked)="createParty.emit()"
+    [value]="metrics().registeredPartyCount"
+  />
+</div>

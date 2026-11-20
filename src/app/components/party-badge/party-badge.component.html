@@ -1,0 +1,5 @@
+@if (imageUrl() && !imageFailed()) {
+  <img alt="" class="badge-image" height="40" width="40" (error)="imageFailed.set(true)" [ngSrc]="imageUrl()!" />
+} @else {
+  {{ label() }}
+}

@@ -1,0 +1,11 @@
+<div class="overlay">
+  <button aria-label="Sluiten" class="backdrop" type="button" (click)="cancelled.emit()"></button>
+  <div aria-modal="true" class="dialog" role="alertdialog">
+    <h2 class="title">{{ title() }}</h2>
+    <p class="message">{{ message() }}</p>
+    <div class="actions">
+      <stw-button size="sm" variant="secondary" (buttonClick)="cancelled.emit()">{{ cancelLabel() }}</stw-button>
+      <stw-button size="sm" variant="danger" (buttonClick)="confirmed.emit()">{{ confirmLabel() }}</stw-button>
+    </div>
+  </div>
+</div>

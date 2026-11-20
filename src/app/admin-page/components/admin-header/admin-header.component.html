@@ -1,0 +1,20 @@
+<header class="admin-header">
+  <div class="brand">
+    <span aria-hidden="true" class="brand-mark">
+      <img alt="" class="brand-mark-image" height="1024" ngSrc="assets/icons/image.png" width="1024" />
+    </span>
+    <span class="brand-text">
+      <span class="brand-name">StemWijzer</span>
+      <span class="brand-subtitle">CMS Beheer</span>
+    </span>
+  </div>
+  <div class="account">
+    <stw-user-avatar tone="light" [name]="userName()" [role]="roleLabel()" />
+    <button class="logout-button" title="Uitloggen" type="button" (click)="logoutRequested.emit()">
+      <svg aria-hidden="true" fill="none" viewBox="0 0 20 20">
+        <path d="M7.5 17.5H4.167a.833.833 0 0 1-.834-.833V3.333A.833.833 0 0 1 4.167 2.5H7.5M13.333 14.167 17.5 10l-4.167-4.167M17.5 10H7.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" />
+      </svg>
+      <span class="visually-hidden">Uitloggen ({{ userEmail() }})</span>
+    </button>
+  </div>
+</header>

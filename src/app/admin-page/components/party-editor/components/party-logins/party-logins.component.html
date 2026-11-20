@@ -1,0 +1,36 @@
+<div class="logins">
+  <p class="logins-hint" role="status" [class.logins-success]="successMessage() !== null">{{ successMessage() ?? hint() }}</p>
+
+  @if (errorMessage(); as message) {
+    <stw-security-notice variant="error">{{ message }}</stw-security-notice>
+  }
+
+  @if (ready()) {
+    @for (account of accounts(); track account.id) {
+      @if (editingId() === account.id) {
+        <stw-party-login-form
+          (cancelled)="closeForms()"
+          (submitLogin)="handleUpdate(account, $event)"
+          [account]="account"
+          [idPrefix]="`party-login-${account.id}`"
+          [saving]="busyId() === account.id"
+        />
+      } @else {
+        <stw-party-login-row
+          (deleteConfirmed)="handleDelete(account)"
+          (editRequested)="startEditing(account)"
+          [account]="account"
+          [busy]="busyId() === account.id"
+        />
+      }
+    }
+
+    @if (adding()) {
+      <stw-party-login-form idPrefix="party-login-new" (cancelled)="closeForms()" (submitLogin)="handleCreate($event)" [saving]="busyId() === 0" />
+    } @else {
+      <div class="logins-add">
+        <stw-button size="sm" variant="secondary" (buttonClick)="startAdding()">+ Inloggegevens toevoegen</stw-button>
+      </div>
+    }
+  }
+</div>

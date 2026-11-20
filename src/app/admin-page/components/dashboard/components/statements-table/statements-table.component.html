@@ -1,0 +1,61 @@
+<section class="panel" id="stellingen-panel">
+  <div class="panel-header">
+    <div class="panel-heading">
+      <h2>Stellingen beheren</h2>
+      <p>Overzicht van alle stellingen en hun status</p>
+    </div>
+    <div class="panel-controls">
+      <stw-search-bar placeholder="Zoek op stellingtekst…" (valueChange)="searchChange.emit($event)" [value]="search()" />
+      <stw-dropdown ariaLabel="Filter op status" (valueChange)="handleStatusChange($event)" [options]="statusOptions" [value]="status()" />
+      <stw-button size="sm" (buttonClick)="addRequested.emit()">
+        <svg aria-hidden="true" fill="none" viewBox="0 0 14 14">
+          <path d="M7 2.917v8.166M2.917 7h8.166" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" />
+        </svg>
+        Stelling toevoegen
+      </stw-button>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <stw-empty-state message="Stellingen laden…" />
+  } @else if (statements().length === 0) {
+    <stw-empty-state message="Er zijn geen stellingen gevonden voor deze zoekopdracht." />
+  } @else {
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th scope="col">Nr</th>
+          <th scope="col">Stellingtekst</th>
+          <th scope="col">Status</th>
+          <th class="actions-column" scope="col">Acties</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (statement of statements(); track statement.id) {
+          <tr>
+            <td class="number-cell">#{{ statement.id }}</td>
+            <td class="text-cell">{{ statement.text }}</td>
+            <td>
+              <stw-status-badge [tone]="statement.isActive ? 'green' : 'gray'">
+                {{ statement.isActive ? 'Actief' : 'Inactief' }}
+              </stw-status-badge>
+            </td>
+            <td class="actions-column">
+              <button class="row-action" type="button" (click)="editRequested.emit(statement.id)">Bewerken</button>
+              <button class="row-action row-action-danger" type="button" (click)="deleteRequested.emit(statement.id)">Verwijderen</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+
+  <div class="pagination">
+    <p>Weergave: {{ statements().length }} van {{ total() }} stellingen</p>
+    <div class="pagination-controls">
+      <button type="button" (click)="goToPreviousPage()" [disabled]="page() <= 1">Vorige</button>
+      <span>{{ page() }} / {{ totalPages() }}</span>
+      <button type="button" (click)="goToNextPage()" [disabled]="page() >= totalPages()">Volgende</button>
+    </div>
+  </div>
+</section>

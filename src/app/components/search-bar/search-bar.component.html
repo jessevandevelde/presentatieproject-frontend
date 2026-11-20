@@ -1,0 +1,13 @@
+<label class="search-bar">
+  <svg aria-hidden="true" class="search-icon" fill="none" viewBox="0 0 20 20">
+    <circle cx="9.167" cy="9.167" r="5.833" stroke="currentColor" stroke-width="1.5" />
+    <path d="m17.5 17.5-3.583-3.583" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" />
+  </svg>
+  <span class="visually-hidden">{{ placeholder() }}</span>
+  <input
+    type="search"
+    (input)="handleInput($event)"
+    [placeholder]="placeholder()"
+    [value]="value()"
+  />
+</label>

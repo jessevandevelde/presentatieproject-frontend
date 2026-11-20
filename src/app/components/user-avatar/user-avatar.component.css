@@ -1,0 +1,44 @@
+.user-avatar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.initials {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-on-primary);
+  background-color: var(--color-accent-blue);
+  border-radius: var(--radius-full);
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  line-height: var(--line-height-tight);
+}
+
+.name {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.role {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+.name-light {
+  color: var(--color-text-on-primary);
+}
+
+.role-light {
+  color: rgb(255 255 255 / 60%);
+}

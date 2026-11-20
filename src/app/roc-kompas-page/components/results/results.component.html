@@ -12,42 +12,10 @@
     </p>
 
     @if (bestMatch(); as winner) {
-      <section aria-labelledby="best-match-heading" class="card best-match-card">
-        <p class="best-match-label">Jouw uitslag</p>
-        <div class="best-match-title">
-          <h1 id="best-match-heading">{{ winner.profileName }}</h1>
-          <span class="best-match-score">{{ percentage(winner) }}%</span>
-        </div>
-        <p class="best-match-text">{{ winner.matchedAnswers }} van de {{ winner.comparedAnswers }} antwoorden komen overeen met dit profiel.</p>
-        <div class="bar">
-          <div class="bar-fill" [style.width.%]="percentage(winner)"></div>
-        </div>
-        <p class="answer-breakdown">
-          Je antwoorden: {{ answerSummary().agree }} eens, {{ answerSummary().neutral }} neutraal en {{ answerSummary().disagree }} oneens.
-        </p>
-      </section>
-
-      <section aria-labelledby="other-profiles-heading" class="card">
-        <h2 id="other-profiles-heading">Andere profielen</h2>
-        <ul class="profile-list">
-          @for (match of otherMatches(); track match.profileId) {
-            <li>
-              <div class="profile-row">
-                <span>{{ match.profileName }}</span>
-                <span>{{ percentage(match) }}%</span>
-              </div>
-              <div class="bar bar-small">
-                <div class="bar-fill" [style.width.%]="percentage(match)"></div>
-              </div>
-            </li>
-          }
-        </ul>
-      </section>
-
       <section aria-labelledby="spectrum-heading" class="card">
         <h2 id="spectrum-heading">Waar sta jij?</h2>
         <p class="spectrum-intro">
-          Hieronder zie je waar jij ongeveer staat ten opzichte van de vier profielen.
+          Je antwoorden bepalen jouw positie op het onderwijskompas.
           Links is meer theoretisch, rechts meer praktisch. Boven is vernieuwend, onder is behoudend.
         </p>
 
@@ -56,16 +24,9 @@
           <span class="axis-label axis-left">Theoretisch</span>
           <span class="axis-label axis-right">Praktisch</span>
           <span class="axis-label axis-bottom">Behoudend</span>
-          <svg aria-label="Spectrum met jouw positie en de onderwijsprofielen" class="spectrum-plot" role="img" viewBox="0 0 100 100">
+          <svg aria-label="Onderwijskompas met jouw positie" class="spectrum-plot" role="img" viewBox="0 0 100 100">
             <line class="spectrum-axis" x1="8" x2="92" y1="50" y2="50" />
             <line class="spectrum-axis" x1="50" x2="50" y1="8" y2="92" />
-            @for (point of spectrumPoints(); track point.id) {
-              <g class="party-point">
-                <title>{{ point.name }}</title>
-                <circle r="4.5" [attr.cx]="point.x" [attr.cy]="point.y" />
-                <text text-anchor="middle" [attr.x]="point.x" [attr.y]="point.y + 1.2">{{ point.label }}</text>
-              </g>
-            }
             <g class="user-point">
               <title>Jouw positie</title>
               <circle r="5.5" [attr.cx]="userPoint().x" [attr.cy]="userPoint().y" />
@@ -89,3 +50,4 @@
     </div>
   </div>
 </main>
+

@@ -1,0 +1,71 @@
+<section class="panel" id="partijen-panel">
+  <div class="panel-header">
+    <div class="panel-heading">
+      <h2>Partijen beheren</h2>
+      <p>Alle geregistreerde partijen en hun status</p>
+    </div>
+    <div class="panel-controls">
+      <stw-search-bar placeholder="Zoek op naam of omschrijving…" (valueChange)="searchChange.emit($event)" [value]="search()" />
+      <stw-button size="sm" (buttonClick)="addRequested.emit()">
+        <svg aria-hidden="true" fill="none" viewBox="0 0 14 14">
+          <path d="M7 2.917v8.166M2.917 7h8.166" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" />
+        </svg>
+        Nieuwe partij
+      </stw-button>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <stw-empty-state message="Partijen laden…" />
+  } @else if (parties().length === 0) {
+    <stw-empty-state message="Er zijn geen partijen gevonden voor deze zoekopdracht." />
+  } @else {
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th scope="col">Logo</th>
+          <th scope="col">Partijnaam</th>
+          <th scope="col">Status</th>
+          <th class="actions-column" scope="col">Directe acties</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (party of parties(); track party.id) {
+          <tr>
+            <td>
+              @if (party.imageUrl !== null) {
+                <img alt="" class="party-logo-image" height="36" width="36" [ngSrc]="party.imageUrl" />
+              } @else {
+                <span aria-hidden="true" class="party-logo">{{ initials(party.name) }}</span>
+              }
+            </td>
+            <td>
+              <p class="party-name">{{ party.name }}</p>
+              @if (party.description !== null) {
+                <p class="party-description">{{ party.description }}</p>
+              }
+            </td>
+            <td>
+              <stw-status-badge [tone]="party.isActive ? 'green' : 'gray'">
+                {{ party.isActive ? 'Actief' : 'Inactief' }}
+              </stw-status-badge>
+            </td>
+            <td class="actions-column">
+              <button class="row-action" type="button" (click)="editRequested.emit(party.id)">Bewerken</button>
+              <button class="row-action row-action-danger" type="button" (click)="deleteRequested.emit(party.id)">Verwijderen</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+
+  <div class="pagination">
+    <p>Weergave: {{ parties().length }} van {{ total() }} partijen</p>
+    <div class="pagination-controls">
+      <button type="button" (click)="goToPreviousPage()" [disabled]="page() <= 1">Vorige</button>
+      <span>{{ page() }} / {{ totalPages() }}</span>
+      <button type="button" (click)="goToNextPage()" [disabled]="page() >= totalPages()">Volgende</button>
+    </div>
+  </div>
+</section>

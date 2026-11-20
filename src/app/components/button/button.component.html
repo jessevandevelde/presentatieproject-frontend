@@ -1,0 +1,19 @@
+<button
+  class="button"
+  (click)="handleClick()"
+  [attr.form]="formId()"
+  [class.button-danger]="variant() === 'danger'"
+  [class.button-full-width]="fullWidth()"
+  [class.button-loading]="loading()"
+  [class.button-secondary]="variant() === 'secondary'"
+  [class.button-sm]="size() === 'sm'"
+  [disabled]="disabled() || loading()"
+  [type]="type()"
+>
+  @if (loading()) {
+    <span aria-hidden="true" class="button-spinner"></span>
+  }
+  <span class="button-label">
+    <ng-content />
+  </span>
+</button>

@@ -1,0 +1,16 @@
+<main class="page">
+  <div class="card">
+    <stw-brand-mark heading="Inloggen" />
+    <stw-login-form (submitLogin)="handleLogin($event)" [loading]="loading()" />
+    @if (errorMessage(); as message) {
+      <stw-security-notice variant="error">{{ message }}</stw-security-notice>
+    } @else {
+      <stw-security-notice variant="info">
+        Deze omgeving is voor beheerders van ROC Kompas. Log in met het account dat je van de beheerder
+        hebt gekregen; nieuwe accounts worden niet zelf aangemaakt.
+      </stw-security-notice>
+    }
+  </div>
+  <p class="footer">© {{ currentYear }} ROC Midden Nederland</p>
+</main>
+

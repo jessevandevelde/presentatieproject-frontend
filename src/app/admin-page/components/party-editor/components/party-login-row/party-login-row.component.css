@@ -1,0 +1,48 @@
+@import url("../../../../../../styles/admin-panel.css");
+
+.login-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.login-details {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.login-name {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.login-email {
+  overflow: hidden;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  text-overflow: ellipsis;
+}
+
+.login-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  align-items: center;
+}
+
+.confirm-text {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.row-action:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}

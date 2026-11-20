@@ -1,0 +1,20 @@
+:host {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  min-width: 3rem;
+  height: 3rem;
+  padding: 0 var(--space-2);
+  overflow: hidden;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--party-color);
+  background-color: color-mix(in srgb, var(--party-color) 14%, var(--color-surface));
+  border-radius: var(--radius-sm);
+}
+
+.badge-image {
+  width: 2.5rem;
+  height: 2.5rem;
+  object-fit: contain;
+}

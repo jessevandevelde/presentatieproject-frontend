@@ -1,0 +1,70 @@
+<div class="party-page">
+  <header class="page-header">
+    <div class="page-heading">
+      <nav aria-label="Kruimelpad" class="breadcrumb-trail">
+        <a fragment="partijen-panel" routerLink="/admin">Partijen</a>
+        <span aria-hidden="true">›</span>
+        <span class="breadcrumb-current">{{ pageLabel() }}</span>
+      </nav>
+      <h1 class="page-title">
+        <span class="status-dot" [class.status-dot-inactive]="initialValue()?.isActive === false"></span>
+        Partij beheren
+      </h1>
+    </div>
+
+    @if (!notFound()) {
+      <div class="page-actions">
+        <stw-button size="sm" variant="secondary" (buttonClick)="handleCancel()">Annuleren</stw-button>
+        @if (partyId !== null) {
+          <stw-button size="sm" variant="danger" (buttonClick)="requestDeletion()" [loading]="deleting()">Partij verwijderen</stw-button>
+        }
+        <stw-button formId="party-form" size="sm" type="submit" [loading]="saving()">Opslaan</stw-button>
+      </div>
+    }
+  </header>
+
+  @if (notFound()) {
+    <stw-security-notice variant="error">Deze partij kon niet worden gevonden.</stw-security-notice>
+  } @else {
+    @if (errorMessage(); as message) {
+      <stw-security-notice variant="error">{{ message }}</stw-security-notice>
+    }
+
+    <div class="party-grid">
+      <div class="party-column">
+        <section class="panel">
+          <h2 class="panel-title">Partijgegevens</h2>
+          <stw-party-form
+            (submitForm)="handleSubmit($event)"
+            [initialValue]="initialValue()"
+            [loading]="saving()"
+          />
+        </section>
+
+        <section class="panel">
+          <h2 class="panel-title">Inloggegevens partij</h2>
+          <stw-party-logins [partyId]="partyId" />
+        </section>
+
+        <section class="panel">
+          <h2 class="panel-title">Ideologische plaatsing</h2>
+          <p class="panel-placeholder">Volgt in een volgende stap.</p>
+        </section>
+      </div>
+
+      <section class="panel">
+        <h2 class="panel-title">Standpunten op stellingen</h2>
+        <stw-party-answers [partyId]="partyId" />
+      </section>
+    </div>
+  }
+</div>
+
+@if (showDeleteDialog()) {
+  <stw-confirmation-dialog
+    title="Partij verwijderen"
+    (cancelled)="cancelDeletion()"
+    (confirmed)="confirmDeletion()"
+    [message]="`Weet je zeker dat je ${initialValue()?.name ?? 'deze partij'} permanent wilt verwijderen? Dit kan niet ongedaan worden gemaakt.`"
+  />
+}

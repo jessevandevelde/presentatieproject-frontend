@@ -1,0 +1,42 @@
+<div class="party-shell">
+  <stw-admin-header roleLabel="Partijbeheerder" (logoutRequested)="handleLogout()" [userEmail]="userEmail" [userName]="userName" />
+  <main class="party-content">
+    <stw-party-details-form
+      (submitDetails)="handleSaveDetails($event)"
+      [errorMessage]="detailsErrorMessage()"
+      [party]="party()"
+      [saved]="detailsSaved()"
+      [saving]="savingDetails()"
+    />
+
+    <section class="panel">
+      <div class="panel-header">
+        <div class="panel-heading">
+          <h2>Standpunten van {{ partyName() }}</h2>
+          <p>Kies per stelling het standpunt van je partij en leg kort uit waarom. Kiezers zien die uitleg in de StemWijzer. {{ answeredCount() }} van {{ statements().length }} stellingen ingevuld.</p>
+        </div>
+      </div>
+
+      @if (errorMessage(); as message) {
+        <stw-security-notice variant="error">{{ message }}</stw-security-notice>
+      }
+
+      @if (loading()) {
+        <stw-empty-state message="Stellingen laden…" />
+      } @else if (statements().length === 0) {
+        <stw-empty-state message="Er zijn nog geen actieve stellingen." />
+      } @else {
+        <div class="statement-list">
+          @for (statement of statements(); track statement.statementId) {
+            <stw-party-statement-row
+              (answerChosen)="handleAnswer(statement, $event)"
+              (explanationSaved)="handleExplanation(statement, $event)"
+              [busy]="savingStatementId() === statement.statementId"
+              [statement]="statement"
+            />
+          }
+        </div>
+      }
+    </section>
+  </main>
+</div>

@@ -1,0 +1,39 @@
+.admin-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background: linear-gradient(180deg, var(--color-background-from) 0%, var(--color-background-to) 100%);
+}
+
+.admin-body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.admin-sidebar {
+  flex-shrink: 0;
+  width: 15rem;
+  padding: var(--space-4);
+  background-color: var(--color-primary);
+}
+
+.admin-content {
+  flex: 1;
+  min-width: 0;
+  padding: var(--space-6) var(--space-8);
+}
+
+@media (width <= 960px) {
+  .admin-body {
+    flex-direction: column;
+  }
+
+  .admin-sidebar {
+    width: 100%;
+  }
+
+  .admin-content {
+    padding: var(--space-4);
+  }
+}

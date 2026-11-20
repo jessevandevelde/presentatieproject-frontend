@@ -1,0 +1,36 @@
+@import url("../../../../../../styles/admin-panel.css");
+
+.party-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-secondary);
+  background-color: var(--color-field-background);
+  border-radius: var(--radius-sm);
+}
+
+.party-logo-image {
+  width: 2.25rem;
+  height: 2.25rem;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+}
+
+.party-name {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.party-description {
+  margin-top: var(--space-1);
+  max-width: 24rem;
+  overflow: hidden;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

@@ -1,0 +1,23 @@
+@import url("../../../../../../styles/auth-form.css");
+
+.login-form {
+  padding: var(--space-4);
+  background-color: var(--color-field-background);
+  border-radius: var(--radius-md);
+}
+
+.login-form .field-input {
+  background-color: var(--color-surface);
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+@media (width <= 30rem) {
+  .field-row {
+    grid-template-columns: 1fr;
+  }
+}

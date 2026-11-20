@@ -1,0 +1,22 @@
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.breadcrumb {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+}
+
+.page-title {
+  margin-top: var(--space-1);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}

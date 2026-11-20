@@ -1,0 +1,36 @@
+@import url("../../../../../../styles/auth-form.css");
+
+.field-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.field-hint {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+  padding: var(--space-4);
+  margin: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.form-section legend {
+  padding: 0 var(--space-2);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+@media (width <= 40rem) {
+  .field-row {
+    grid-template-columns: 1fr;
+  }
+}

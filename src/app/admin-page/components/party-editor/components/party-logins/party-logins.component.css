@@ -1,0 +1,20 @@
+.logins {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.logins-hint {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.logins-success {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-accent-green);
+}
+
+.logins-add {
+  display: flex;
+}

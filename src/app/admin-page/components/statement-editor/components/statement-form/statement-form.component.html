@@ -1,0 +1,83 @@
+<form class="form" (ngSubmit)="handleSubmit()" [formGroup]="form">
+  <div class="field-row">
+    <div class="field">
+      <label class="field-label" for="statement-title">Korte titel</label>
+      <div class="field-input" [class.field-input-error]="isInvalid(form.controls.title)">
+        <input formControlName="title" id="statement-title" placeholder="Bijvoorbeeld: Hypotheekrenteaftrek" type="text" />
+      </div>
+      <p class="field-hint">Grote kop boven de stelling in de StemWijzer.</p>
+    </div>
+    <div class="field">
+      <label class="field-label" for="statement-theme">Thema</label>
+      <div class="field-input" [class.field-input-error]="isInvalid(form.controls.theme)">
+        <input formControlName="theme" id="statement-theme" list="statement-themes" placeholder="Kies of typ een thema" type="text" />
+      </div>
+      <datalist id="statement-themes">
+        @for (theme of themes; track theme) {
+          <option [value]="theme"></option>
+        }
+      </datalist>
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="field-label" for="statement-text">Stellingtekst</label>
+    <textarea
+      class="field-textarea"
+      formControlName="text"
+      id="statement-text"
+      placeholder="Bijvoorbeeld: Nederland moet voor 2035 minimaal twee nieuwe kerncentrales bouwen…"
+      rows="3"
+      [class.field-input-error]="isInvalid(form.controls.text)"
+    ></textarea>
+    @if (isInvalid(form.controls.text)) {
+      <p class="field-error">{{ textErrorMessage() }}</p>
+    }
+  </div>
+
+  <fieldset class="form-section">
+    <legend>Toelichting voor kiezers</legend>
+    <div class="field">
+      <label class="field-label" for="statement-explanation">Wat houdt het in?</label>
+      <textarea class="field-textarea" formControlName="explanation" id="statement-explanation" placeholder="Leg in gewone taal uit waar de stelling over gaat." rows="4"></textarea>
+    </div>
+    <div class="field">
+      <label class="field-label" for="statement-consequence">Wat betekent het als dit wordt ingevoerd?</label>
+      <textarea class="field-textarea" formControlName="consequence" id="statement-consequence" placeholder="Beschrijf de gevolgen als de stelling werkelijkheid wordt." rows="4"></textarea>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label class="field-label" for="statement-arguments-for">Argumenten voor</label>
+        <textarea
+          class="field-textarea"
+          formControlName="argumentsFor"
+          id="statement-arguments-for"
+          placeholder="Eén argument per regel"
+          rows="5"
+          [class.field-input-error]="isInvalid(form.controls.argumentsFor)"
+        ></textarea>
+      </div>
+      <div class="field">
+        <label class="field-label" for="statement-arguments-against">Argumenten tegen</label>
+        <textarea
+          class="field-textarea"
+          formControlName="argumentsAgainst"
+          id="statement-arguments-against"
+          placeholder="Eén argument per regel"
+          rows="5"
+          [class.field-input-error]="isInvalid(form.controls.argumentsAgainst)"
+        ></textarea>
+      </div>
+    </div>
+    <p class="field-hint">Zet elk argument op een eigen regel, maximaal {{ maxArguments }} per kant. Lege velden worden in de StemWijzer niet getoond.</p>
+  </fieldset>
+
+  <label class="checkbox-field">
+    <input formControlName="isActive" type="checkbox" />
+    <span>Stelling is actief</span>
+  </label>
+  <div class="form-actions">
+    <stw-button type="button" variant="secondary" (buttonClick)="cancelled.emit()">Annuleren</stw-button>
+    <stw-button type="submit" [loading]="loading()">Stelling opslaan</stw-button>
+  </div>
+</form>

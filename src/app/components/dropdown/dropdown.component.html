@@ -1,0 +1,10 @@
+<div class="dropdown">
+  <select (change)="handleChange($event)" [attr.aria-label]="ariaLabel()" [value]="value()">
+    @for (option of options(); track option.value) {
+      <option [value]="option.value">{{ option.label }}</option>
+    }
+  </select>
+  <svg aria-hidden="true" class="chevron" fill="none" viewBox="0 0 16 16">
+    <path d="m4 6 4 4 4-4" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" />
+  </svg>
+</div>

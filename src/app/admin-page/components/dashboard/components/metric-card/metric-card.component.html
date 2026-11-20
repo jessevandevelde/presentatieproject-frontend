@@ -1,0 +1,12 @@
+<div class="metric-card">
+  <div class="metric-info">
+    <p class="metric-label">{{ label() }}</p>
+    <p class="metric-value">{{ value() }} <span class="metric-unit">{{ unit() }}</span></p>
+  </div>
+  <stw-button size="sm" (buttonClick)="actionClicked.emit()">
+    <svg aria-hidden="true" fill="none" viewBox="0 0 14 14">
+      <path d="M7 2.917v8.166M2.917 7h8.166" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" />
+    </svg>
+    {{ actionLabel() }}
+  </stw-button>
+</div>

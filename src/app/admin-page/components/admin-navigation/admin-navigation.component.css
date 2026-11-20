@@ -1,0 +1,68 @@
+.admin-navigation {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-2) 0;
+}
+
+.section-label {
+  padding: 0 var(--space-3);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.06em;
+  color: rgb(255 255 255 / 45%);
+  text-transform: uppercase;
+}
+
+.nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: rgb(255 255 255 / 70%);
+  border-radius: var(--radius-md);
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.nav-item:hover {
+  color: var(--color-text-on-primary);
+  background-color: rgb(255 255 255 / 8%);
+}
+
+.nav-item-active {
+  color: var(--color-text-on-primary);
+  background-color: var(--color-accent-blue);
+}
+
+.nav-item-disabled {
+  cursor: not-allowed;
+  color: rgb(255 255 255 / 35%);
+}
+
+.nav-item-disabled:hover {
+  background-color: transparent;
+}
+
+.nav-icon {
+  flex-shrink: 0;
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+.soon-badge {
+  padding: 0.125rem var(--space-2);
+  margin-left: auto;
+  font-size: 0.6875rem;
+  font-weight: var(--font-weight-semibold);
+  color: rgb(255 255 255 / 60%);
+  background-color: rgb(255 255 255 / 10%);
+  border-radius: var(--radius-full);
+}

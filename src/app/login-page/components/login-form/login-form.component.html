@@ -1,0 +1,43 @@
+<form class="form" (ngSubmit)="handleSubmit()" [formGroup]="form">
+  <div class="field">
+    <label class="field-label" for="login-email">E-mailadres</label>
+    <div class="field-input" [class.field-input-error]="isFieldInvalid(form.controls.email)">
+      <svg aria-hidden="true" class="field-icon" fill="none" viewBox="0 0 20 20">
+        <path d="M2.5 5.833A1.667 1.667 0 0 1 4.167 4.167h11.666A1.667 1.667 0 0 1 17.5 5.833v8.334a1.667 1.667 0 0 1-1.667 1.666H4.167A1.667 1.667 0 0 1 2.5 14.167V5.833Z" stroke="currentColor" stroke-width="1.5" />
+        <path d="m3.333 5.833 6.25 4.584a.833.833 0 0 0 .834 0l6.25-4.584" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" />
+      </svg>
+      <input autocomplete="email" formControlName="email" id="login-email" placeholder="naam@voorbeeld.nl" type="email" />
+    </div>
+    @if (isFieldInvalid(form.controls.email)) {
+      <p class="field-error">{{ emailErrorMessage() }}</p>
+    }
+  </div>
+  <div class="field">
+    <div class="field-heading">
+      <label class="field-label" for="login-password">Wachtwoord</label>
+      
+    </div>
+    <div class="field-input" [class.field-input-error]="isFieldInvalid(form.controls.password)">
+      <svg aria-hidden="true" class="field-icon" fill="none" viewBox="0 0 20 20">
+        <path d="M5.833 9.167V6.25a4.167 4.167 0 1 1 8.334 0v2.917" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" />
+        <rect height="7.5" rx="1.667" stroke="currentColor" stroke-width="1.5" width="12.5" x="3.75" y="9.167" />
+      </svg>
+      <input
+        autocomplete="current-password"
+        formControlName="password"
+        id="login-password"
+        [type]="passwordVisible() ? 'text' : 'password'"
+      />
+      <stw-password-toggle (toggleRequested)="togglePasswordVisibility()" [visible]="passwordVisible()" />
+    </div>
+    @if (isFieldInvalid(form.controls.password)) {
+      <p class="field-error">{{ passwordErrorMessage() }}</p>
+    }
+  </div>
+  <label class="checkbox-field">
+    <input formControlName="rememberMe" type="checkbox" />
+    <span>Ingelogd blijven</span>
+  </label>
+  <stw-button type="submit" [fullWidth]="true" [loading]="loading()">Inloggen</stw-button>
+</form>
+

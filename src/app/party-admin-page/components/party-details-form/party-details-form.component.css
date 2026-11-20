@@ -1,0 +1,9 @@
+@import url("../../../../styles/admin-panel.css");
+@import url("../../../../styles/auth-form.css");
+
+.saved-message {
+  align-self: center;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-accent-green);
+}

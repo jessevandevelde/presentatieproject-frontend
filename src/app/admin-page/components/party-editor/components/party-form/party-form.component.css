@@ -1,0 +1,107 @@
+@import url("../../../../../../styles/auth-form.css");
+
+.required {
+  color: var(--color-danger);
+}
+
+.checkbox-field[hidden] {
+  display: none;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.mono {
+  font-family: ui-monospace, "Cascadia Code", consolas, monospace;
+}
+
+.color-swatch {
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.field-suffix {
+  flex-shrink: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.logo-block {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  padding: var(--space-3);
+  background-color: var(--color-field-background);
+  border-radius: var(--radius-md);
+}
+
+.logo-text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+.logo-text strong {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+}
+
+.logo-edit {
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-accent-blue);
+  cursor: pointer;
+  background-color: color-mix(in srgb, var(--color-accent-blue) 12%, var(--color-surface));
+  border: none;
+  border-radius: var(--radius-sm);
+}
+
+.logo-edit:hover {
+  background-color: color-mix(in srgb, var(--color-accent-blue) 20%, var(--color-surface));
+}
+
+.logo-block:has(input[type="file"]:focus-visible) .logo-edit {
+  outline: 2px solid var(--color-accent-blue);
+  outline-offset: 2px;
+}
+
+.logo-edit-busy {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+.logo-remove {
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-danger);
+  cursor: pointer;
+  background: none;
+  border: none;
+  border-radius: var(--radius-sm);
+}
+
+.logo-remove[hidden] {
+  display: none;
+}
+
+.logo-remove:hover {
+  background-color: var(--color-danger-background);
+}
+
+@media (width <= 30rem) {
+  .field-row {
+    grid-template-columns: 1fr;
+  }
+}

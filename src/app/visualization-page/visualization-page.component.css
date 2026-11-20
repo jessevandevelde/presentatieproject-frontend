@@ -298,3 +298,20 @@ p {
     animation: none;
   }
 }
+
+/* Keep the long side labels inside the reserved edge of the plot. */
+.axis-left,
+.axis-right {
+  top: 50%;
+  writing-mode: vertical-rl;
+  white-space: nowrap;
+  line-height: 1;
+  transform: translateY(-50%);
+}
+.axis-left {
+  left: 0.35rem;
+  transform: translateY(-50%) rotate(180deg);
+}
+.axis-right {
+  right: 0.35rem;
+}

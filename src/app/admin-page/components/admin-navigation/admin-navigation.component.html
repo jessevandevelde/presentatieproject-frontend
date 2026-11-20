@@ -1,0 +1,42 @@
+<nav aria-label="Beheernavigatie" class="admin-navigation">
+  <p class="section-label">Proces admin</p>
+  <ul class="nav-list" role="list">
+    <li>
+      <a class="nav-item" routerLink="/admin" routerLinkActive="nav-item-active" [routerLinkActiveOptions]="{ exact: true }">
+        <svg aria-hidden="true" class="nav-icon" fill="none" viewBox="0 0 20 20">
+          <path d="M2.5 8.333 10 2.5l7.5 5.833V16.5a1 1 0 0 1-1 1h-3.75v-5.417h-5.5V17.5H3.5a1 1 0 0 1-1-1V8.333Z" stroke="currentColor" stroke-linejoin="round" stroke-width="1.5" />
+        </svg>
+        Overzicht
+      </a>
+    </li>
+    <li>
+      <a class="nav-item" fragment="stellingen-panel" routerLink="/admin">
+        <svg aria-hidden="true" class="nav-icon" fill="none" viewBox="0 0 20 20">
+          <path d="M4.167 3.333h11.666a.833.833 0 0 1 .834.834v11.666a.833.833 0 0 1-.834.834H4.167a.833.833 0 0 1-.834-.834V4.167a.833.833 0 0 1 .834-.834Z" stroke="currentColor" stroke-width="1.5" />
+          <path d="M6.667 7.5h6.666M6.667 10.833h6.666M6.667 14.167h4.166" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" />
+        </svg>
+        Stellingen
+      </a>
+    </li>
+    <li>
+      <a class="nav-item" fragment="partijen-panel" routerLink="/admin">
+        <svg aria-hidden="true" class="nav-icon" fill="none" viewBox="0 0 20 20">
+          <circle cx="7.083" cy="6.25" r="2.5" stroke="currentColor" stroke-width="1.5" />
+          <circle cx="13.75" cy="8.333" r="2.083" stroke="currentColor" stroke-width="1.5" />
+          <path d="M2.5 16.25c0-2.3 2.052-4.167 4.583-4.167 1.55 0 2.92.7 3.75 1.777M11.25 12.917c.485-.278 1.055-.417 1.667-.417 2.07 0 3.75 1.679 3.75 3.75" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" />
+        </svg>
+        Partijen
+      </a>
+    </li>
+    <li>
+      <span aria-disabled="true" class="nav-item nav-item-disabled">
+        <svg aria-hidden="true" class="nav-icon" fill="none" viewBox="0 0 20 20">
+          <circle cx="10" cy="10" r="2.083" stroke="currentColor" stroke-width="1.5" />
+          <path d="M10 3.333v1.5M10 15.167v1.5M16.667 10h-1.5M4.833 10h-1.5M14.714 5.286l-1.06 1.06M6.346 13.654l-1.06 1.06M14.714 14.714l-1.06-1.06M6.346 6.346l-1.06-1.06" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" />
+        </svg>
+        Instellingen
+        <span class="soon-badge">Binnenkort</span>
+      </span>
+    </li>
+  </ul>
+</nav>

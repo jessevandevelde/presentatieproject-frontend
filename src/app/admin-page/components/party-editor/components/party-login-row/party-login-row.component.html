@@ -1,0 +1,16 @@
+<div class="login-row">
+  <div class="login-details">
+    <span class="login-name">{{ account().name }}</span>
+    <span class="login-email">{{ account().email }}</span>
+  </div>
+  <div class="login-actions">
+    @if (confirmingDelete()) {
+      <span class="confirm-text">Account verwijderen?</span>
+      <button class="row-action row-action-danger" type="button" (click)="confirmDelete()" [disabled]="busy()">Ja, verwijderen</button>
+      <button class="row-action" type="button" (click)="setConfirmingDelete(false)">Annuleren</button>
+    } @else {
+      <button class="row-action" type="button" (click)="editRequested.emit()" [disabled]="busy()">Wijzigen</button>
+      <button class="row-action row-action-danger" type="button" (click)="setConfirmingDelete(true)" [disabled]="busy()">Verwijderen</button>
+    }
+  </div>
+</div>

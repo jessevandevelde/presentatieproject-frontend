@@ -1,0 +1,96 @@
+<form class="form" id="party-form" (ngSubmit)="handleSubmit()" [formGroup]="form">
+  <div class="field">
+    <label class="field-label" for="party-name">Officiële partijnaam <span class="required">*</span></label>
+    <div class="field-input" [class.field-input-error]="isFieldInvalid(form.controls.name)">
+      <input formControlName="name" id="party-name" placeholder="Bijvoorbeeld: Democraten 66" type="text" />
+    </div>
+    @if (isFieldInvalid(form.controls.name)) {
+      <p class="field-error">Partijnaam is verplicht en mag maximaal 100 tekens bevatten.</p>
+    }
+  </div>
+
+  <div class="field-row">
+    <div class="field">
+      <label class="field-label" for="party-abbreviation">Afkorting <span class="required">*</span></label>
+      <div class="field-input" [class.field-input-error]="isFieldInvalid(form.controls.abbreviation)">
+        <input formControlName="abbreviation" id="party-abbreviation" placeholder="D66" type="text" />
+      </div>
+      @if (isFieldInvalid(form.controls.abbreviation)) {
+        <p class="field-error">Afkorting is verplicht en mag maximaal 20 tekens bevatten.</p>
+      }
+    </div>
+
+    <div class="field">
+      <label class="field-label" for="party-color">Kleurcode (HEX)</label>
+      <div class="field-input" [class.field-input-error]="isFieldInvalid(form.controls.color)">
+        <input
+          aria-label="Kies een kleur"
+          class="color-swatch"
+          type="color"
+          (input)="handleColorPick($event)"
+          [value]="badgeColor().toLowerCase()"
+        />
+        <input class="mono" formControlName="color" id="party-color" placeholder="#00AA44" type="text" />
+      </div>
+      @if (isFieldInvalid(form.controls.color)) {
+        <p class="field-error">Gebruik een hexkleur zoals #00AA44.</p>
+      }
+    </div>
+  </div>
+
+  <div class="field-row">
+    <div class="field">
+      <label class="field-label" for="party-seats">Huidige zetels (TK)</label>
+      <div class="field-input" [class.field-input-error]="isFieldInvalid(form.controls.seats)">
+        <input formControlName="seats" id="party-seats" min="0" placeholder="0" type="number" [max]="maxSeats" />
+        <span class="field-suffix">/ {{ maxSeats }} zetels</span>
+      </div>
+      @if (isFieldInvalid(form.controls.seats)) {
+        <p class="field-error">Vul een heel getal van 0 tot en met {{ maxSeats }} in.</p>
+      }
+    </div>
+
+    <div class="field">
+      <label class="field-label" for="party-leader">Lijsttrekker</label>
+      <div class="field-input" [class.field-input-error]="isFieldInvalid(form.controls.leader)">
+        <input formControlName="leader" id="party-leader" placeholder="Naam lijsttrekker" type="text" />
+      </div>
+    </div>
+  </div>
+
+  <div class="logo-block">
+    <stw-party-badge
+      [abbreviation]="form.controls.abbreviation.value"
+      [color]="badgeColor()"
+      [imageUrl]="form.controls.imageUrl.value.trim() || null"
+    />
+    <span class="logo-text">
+      <strong>Logo / Symbool</strong>
+      <span>{{ logoStatus() }}</span>
+    </span>
+    <input
+      class="visually-hidden"
+      id="party-logo-file"
+      type="file"
+      (change)="handleLogoSelected($event)"
+      [accept]="logoTypes"
+      [disabled]="uploadingLogo()"
+    />
+    <label class="logo-edit" for="party-logo-file" [class.logo-edit-busy]="uploadingLogo()">{{ hasLogo() ? 'Andere foto' : 'Foto uploaden' }}</label>
+    <button class="logo-remove" type="button" (click)="removeLogo()" [hidden]="!hasLogo()">Verwijderen</button>
+  </div>
+
+  @if (logoError(); as message) {
+    <p class="field-error" role="alert">{{ message }}</p>
+  }
+
+  <div class="field">
+    <label class="field-label" for="party-description">Omschrijving</label>
+    <textarea class="field-textarea" formControlName="description" id="party-description" placeholder="Korte omschrijving van de partij…" rows="3"></textarea>
+  </div>
+
+  <label class="checkbox-field" [hidden]="!showActiveToggle()">
+    <input formControlName="isActive" type="checkbox" />
+    <span>Partij is actief</span>
+  </label>
+</form>
